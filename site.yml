@@ -1,0 +1,2 @@
+  - include: masternode.yml
+  - include: workernode.yml

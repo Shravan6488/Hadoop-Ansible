@@ -1,0 +1,28 @@
+---
+- name: Unarchive hadoop tgz
+  unarchive: src=../../../hadoop-{{ hadoop_version }}.tar.gz dest=/opt/
+
+- name: "Create {{ hadoop_home }} dir"
+  file: dest={{ hadoop_home }} src=/opt/hadoop-{{ hadoop_version }} state=link
+
+- name: "Create /opt/hadoop dir"
+  file: dest=/opt/hadoop src={{ hadoop_home }} state=link
+
+- name: Set JAVA_HOME in hadoop-env.sh in RH
+  lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/jre-1.8.0"
+  when: "ansible_os_family == 'RedHat'"
+
+- name: Set JAVA_HOME in hadoop-env.sh Deb
+  lineinfile: dest="{{ hadoop_home }}/etc/hadoop/hadoop-env.sh" regexp=JAVA_HOME= line="export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64"
+  when: "ansible_os_family == 'Debian'"
+
+- name: include hadoop in the default path...
+  become: yes
+  become_user: root
+  with_items:
+    - f: hadoop.sh
+      d: /etc/profile.d
+  template:
+    src: '{{item.f}}.j2'
+    dest: '{{item.d}}/{{item.f}}'
+    mode: '{{item.m|default("0644")}}'

@@ -1,0 +1,46 @@
+---
+- name: "INIT | VARIABLES | Load OS family vars file"
+  include_vars: "{{ role_path }}/vars/{{ ansible_os_family | lower }}.yml"
+
+# Debian OS family install tasks
+
+- name: "INSTALL | APT | Install openjdk-jdk"
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ openjdk_jdk_packages }}"
+  when: "ansible_os_family == 'Debian'"
+
+# RedHat OS family install tasks
+
+- name: "INSTALL | YUM | Install openjdk-jdk"
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ openjdk_jdk_packages }}"
+    - "{{ openjdk_jdk_packages }}-devel"
+  when: "ansible_os_family == 'RedHat'"
+
+# Get Java Env Variable Path
+- name: "Get the path of openjdk-jdk"
+  shell: which java | xargs readlink -f | xargs dirname | xargs dirname
+  register: openjdk_env
+
+- name: Define java_jdk_link_dir.
+  set_fact:
+    java_jdk_link_dir: "{{ openjdk_env.stdout }}"
+  when: openjdk_env.stdout is defined
+
+#Configure Java Env Variable
+- name: jdk variable configuration /etc/profile.d file
+  become: yes
+  become_user: root
+  with_items:
+    - f: java.sh
+      d: /etc/profile.d
+  template:
+    src: "{{item.f}}.j2"
+    dest: "{{item.d}}/{{item.f}}"
+    mode: '{{item.m|default("0644")}}'
+

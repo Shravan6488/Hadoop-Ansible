@@ -1,0 +1,5 @@
+---
+# Debian OS family vars
+openjdk_jdk_packages:
+   - name: "openjdk-8-jdk"
+

@@ -1,0 +1,5 @@
+{% for host in hadoop_slave_nodes %}
+{% if host != hadoop_master %}
+{{ host }}
+{% endif %}
+{% endfor %}

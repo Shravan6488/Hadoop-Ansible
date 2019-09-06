@@ -1,0 +1,5 @@
+---
+# RedHat OS family vars
+openjdk_jdk_packages:
+  - name: "java-1.8.0-openjdk"
+

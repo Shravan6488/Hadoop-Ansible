@@ -1,0 +1,7 @@
+---
+# The type of the node: slave / master / resourcemanager / nodemanager / datanode / namenode
+hadoop_type_of_node: master
+
+hadoop_version: '3.0.0' 
+hadoop_parent_dir: /opt
+hadoop_home: /usr/local/hadoop

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<configuration>
+        <property>
+             <name>fs.defaultFS</name>
+             <value>hdfs://{{ hadoop_master }}:9000</value>
+        </property>
+        <property>
+             <name>hadoop.tmp.dir</name>
+             <value>file:{{ hadoop_home }}/tmp</value>
+             <description>A base for other temporary directories.</description>
+        </property>
+</configuration>
+

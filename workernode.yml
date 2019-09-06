@@ -1,0 +1,5 @@
+---
+- hosts: wirkernode
+  remote_user: root
+  roles:
+    - { role: 'hadoop', hadoop_master: 'localhost' }

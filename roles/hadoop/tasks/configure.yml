@@ -1,0 +1,13 @@
+---
+- name: Create file yarn-site.xml
+  template: src={{ item }}  dest={{ hadoop_home }}/etc/hadoop/{{ item }}  owner=root group=root
+  with_items:
+    - yarn-site.xml
+    - hdfs-site.xml
+    - core-site.xml
+  notify:
+   - restart hadoop-dfs
+   - restart yarn-resourcemanager
+   - restart hadoop-datanode
+   - restart yarn-nodemanager
+

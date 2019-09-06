@@ -1,0 +1,5 @@
+---
+- hosts: all
+  remote_user: root
+  roles:
+    - { role: 'hadoop', hadoop_master: 'localhost',hadoop_type_of_node: 'master' }
