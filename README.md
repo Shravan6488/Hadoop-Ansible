@@ -23,7 +23,7 @@ The variables that can be passed to this role and a brief description about them
 	# The type of the node: slave or master or resourcemanager or nodemanager or datanode or namenode 
 	hadoop_type_of_node: slave
 	# Hadoop base directory to install the software
-	hadoop_home: /opt/hadoop-3.X
+	hadoop_home: /usr/local/hadoop
 	# Hadoop version to install
 	hadoop_version: 3.0.0
 	# A dictionary with a set of properties to set in the core-site.xml
