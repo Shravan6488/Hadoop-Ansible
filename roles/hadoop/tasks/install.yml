@@ -1,6 +1,12 @@
 ---
+- name: "Download {{ hadoop_version }}"
+  get_url: url={{ hadoop_url }}/hadoop-{{ hadoop_version }}.tar.gz dest=/opt/ force=no
+  register: result
+  until: result is success
+  retries: 5
+  delay: 2
 - name: Unarchive hadoop tgz
-  unarchive: src=../../../hadoop-{{ hadoop_version }}.tar.gz dest=/opt/
+  unarchive: src=/opt/hadoop-{{ hadoop_version }}.tar.gz dest=/opt/
 
 - name: "Create {{ hadoop_home }} dir"
   file: dest={{ hadoop_home }} src=/opt/hadoop-{{ hadoop_version }} state=link
