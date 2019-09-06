@@ -1,2 +1,2 @@
-  - include: masternode.yml
-  - include: workernode.yml
+ - import_playbook: masternode.yml
+ - import_playbook: workernode.yml
