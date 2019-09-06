@@ -1,2 +1,4 @@
+---
+# file: site.yml
  - import_playbook: masternode.yml
  - import_playbook: workernode.yml
